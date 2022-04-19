@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.api.cursotestes.matchers.MatchersProprios.caiNumaSegunda;
+import static com.api.cursotestes.matchers.MatchersProprios.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assume.assumeFalse;
@@ -45,8 +45,8 @@ public class LocacaoServiceTest {
 
         //verificacao
         assertThat(locacao.getValor(), is(equalTo(5.0)));
-        assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-        assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
+        assertThat(locacao.getDataLocacao(), ehHoje());
+        assertThat(locacao.getDataRetorno(), ehHojeComDiferencaDias(1));
     }
 
     @Test
@@ -173,8 +173,6 @@ public class LocacaoServiceTest {
 
         Locacao retorno = service.alugarFilme(usuario, filmes);
 
-        //assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
-        //assertThat(retorno.getDataRetorno(), caiEm(Calendar.MONDAY));
         assertThat(retorno.getDataRetorno(), caiNumaSegunda());
     }
 
