@@ -1,5 +1,6 @@
 package com.api.cursotestes.service;
 
+import com.api.cursotestes.builders.FilmeBuilder;
 import com.api.cursotestes.domain.Filme;
 import com.api.cursotestes.domain.Locacao;
 import com.api.cursotestes.domain.Usuario;
@@ -34,12 +35,12 @@ public class CalculoValorLocacaoTest {
         service = new LocacaoService();
     }
 
-    private static Filme filme1 = new Filme("Interstellar 1", 2, 4.0);
-    private static Filme filme2 = new Filme("Interstellar 2", 2, 4.0);
-    private static Filme filme3 = new Filme("Interstellar 3", 2, 4.0);
-    private static Filme filme4 = new Filme("Interstellar 4", 2, 4.0);
-    private static Filme filme5 = new Filme("Interstellar 5", 2, 4.0);
-    private static Filme filme6 = new Filme("Interstellar 6", 2, 4.0);
+    private static Filme filme1 = FilmeBuilder.umFilme().agora();
+    private static Filme filme2 = FilmeBuilder.umFilme().agora();
+    private static Filme filme3 = FilmeBuilder.umFilme().agora();
+    private static Filme filme4 = FilmeBuilder.umFilme().agora();
+    private static Filme filme5 = FilmeBuilder.umFilme().agora();
+    private static Filme filme6 = FilmeBuilder.umFilme().agora();
 
 
     @Parameters(name = "{2}")

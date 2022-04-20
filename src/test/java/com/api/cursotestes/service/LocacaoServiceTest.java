@@ -1,6 +1,8 @@
 package com.api.cursotestes.service;
 
 
+import com.api.cursotestes.builders.FilmeBuilder;
+import com.api.cursotestes.builders.UsuarioBuilder;
 import com.api.cursotestes.domain.Filme;
 import com.api.cursotestes.domain.Locacao;
 import com.api.cursotestes.domain.Usuario;
@@ -31,14 +33,14 @@ public class LocacaoServiceTest {
         service = new LocacaoService();
     }
 
-    @Test  //esse teste funciona qualquer dia da semana eceto no sabado
+    @Test  //esse teste funciona qualquer dia da semana exceto no sabado
     public void deveAlugarFilmeTest() {
         assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 
         //cenario
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
-        List<Filme> filmes = List.of(new Filme("Interstellar", 2, 5.0));
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().valorFilme(5.0).agora());
 
         //acao
         Locacao locacao = service.alugarFilme(usuario, filmes);
@@ -53,8 +55,8 @@ public class LocacaoServiceTest {
     public void naoDeveAlugarFilmeSemEstoqueTest() {
         //cenario
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
-        List<Filme> filmes = List.of(new Filme("Interstellar", 0, 5.0));
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().filmeSemEstoque().agora());
 
         //acao
         try {
@@ -70,7 +72,7 @@ public class LocacaoServiceTest {
     public void nomeDoUsuarioNaoPodeSerNullTest() {
         //cenario
         service = new LocacaoService();
-        List<Filme> filmes = List.of(new Filme("Interstellar", 2, 5.0));
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora());
 
         //acao
         try {
@@ -86,7 +88,7 @@ public class LocacaoServiceTest {
     public void filmeNaoPodeSerNullTest() {
         //cenario
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
 
         //acao
         try {
@@ -101,10 +103,10 @@ public class LocacaoServiceTest {
     @Test
     public void deveDescontar25PctNoFilme3Test() {
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
-        List<Filme> filmes = List.of(new Filme("Interstellar", 2, 4.0)
-                , new Filme("Interstellar 2", 2, 4.0)
-                , new Filme("Interstellar 3", 2, 4.0));
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora());
 
         Locacao resultado = service.alugarFilme(usuario, filmes);
 
@@ -115,11 +117,11 @@ public class LocacaoServiceTest {
     @Test
     public void deveDescontar50PctNoFilme4Test() {
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
-        List<Filme> filmes = List.of(new Filme("Interstellar", 2, 4.0)
-                , new Filme("Interstellar 2", 2, 4.0)
-                , new Filme("Interstellar 3", 2, 4.0)
-                , new Filme("Interstellar 4", 2, 4.0));
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora());
 
         Locacao resultado = service.alugarFilme(usuario, filmes);
 
@@ -131,12 +133,12 @@ public class LocacaoServiceTest {
     @Test
     public void deveDescontar75PctNoFilme5Test() {
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
-        List<Filme> filmes = List.of(new Filme("Interstellar 1", 2, 4.0)
-                , new Filme("Interstellar 2", 2, 4.0)
-                , new Filme("Interstellar 3", 2, 4.0)
-                , new Filme("Interstellar 4", 2, 4.0)
-                , new Filme("Interstellar 5", 2, 4.0));
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora());
 
         Locacao resultado = service.alugarFilme(usuario, filmes);
 
@@ -148,13 +150,13 @@ public class LocacaoServiceTest {
     @Test
     public void deveDescontar100PctNoFilme6Test() {
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
-        List<Filme> filmes = List.of(new Filme("Interstellar 1", 2, 4.0)
-                , new Filme("Interstellar 2", 2, 4.0)
-                , new Filme("Interstellar 3", 2, 4.0)
-                , new Filme("Interstellar 4", 2, 4.0)
-                , new Filme("Interstellar 5", 2, 4.0)
-                , new Filme("Interstellar 6", 2, 4.0));
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora()
+                , FilmeBuilder.umFilme().agora());
 
         Locacao resultado = service.alugarFilme(usuario, filmes);
 
@@ -168,8 +170,8 @@ public class LocacaoServiceTest {
         assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 
         service = new LocacaoService();
-        Usuario usuario = new Usuario("Paulo Miguel");
-        List<Filme> filmes = List.of(new Filme("Interstellar 1", 2, 4.0));
+        Usuario usuario = UsuarioBuilder.umUsuario().agora();
+        List<Filme> filmes = List.of(FilmeBuilder.umFilme().agora());
 
         Locacao retorno = service.alugarFilme(usuario, filmes);
 
